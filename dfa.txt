@@ -1,20 +1,7 @@
-// Input: a#b (a and b are binary numbers)
-// Ouput: a+b
-// Example: 1011#10 outputs 1101
-//
-// Binary Addition Algorithm
-// for Turing Machine Simulator 
-// turingmachinesimulator.com
-// By Jose Antonio Matte
 
-//qcopyinput - copy input to tape2
-//qreturninput - resets tape2
-//qreadstate - reads state into tape3 as current state
-//qinputcheck - looks at input tape for 0 or 1
-
-name: Binary addition
+name: Project 1 DFA TM
 init: qcopyinput
-accept: q0
+accept: qSUCCESS
 
 //qcopyinput
 qcopyinput, 1,_,_
@@ -56,6 +43,25 @@ qcopystate, 1,0,1,-,>,-
 qinputcheck, 1,1,1
 q1start,1,1,1,-,-,-
 
+qinputcheck, 1,0,_
+qcopystate, 1,0,_,-,>,-
+
+qinputcheck, 1,1,_
+q1start,1,1,_,-,>,-
+
+//inputcheck - go to success
+qinputcheck, 1,_,1
+qchecksuccess, 1,_,1,-,-,-
+
+qinputcheck, 1,_,1
+qchecksuccess,1,_,1,-,-,-
+
+qinputcheck, 1,_,_
+qchecksuccess, 1,_,_,-,-,-
+
+qinputcheck, 1,_,_
+qchecksuccess,1,_,_,-,-,-
+
 //qcopystate
 qcopystate, 1,0,1
 qcopystate,1,0,1,>,-,>
@@ -63,8 +69,14 @@ qcopystate,1,0,1,>,-,>
 qcopystate, 1,0,_
 qcopystate, 1,0,1,>,-,>
 
+qcopystate, 1,_,1
+qcopystate,1,_,1,>,-,>
+
+qcopystate, 1,_,_
+qcopystate, 1,_,1,>,-,>
+
 qcopystate, 0,0,_
-qcopystate, 0,0,_,-,-,-
+qloopback, 0,0,_,-,-,<
 
 qcopystate, 1,1,1
 qcopystate,1,1,1,>,-,>
@@ -72,37 +84,91 @@ qcopystate,1,1,1,>,-,>
 qcopystate, 1,1,_
 qcopystate, 1,1,1,>,-,>
 
+qcopystate, 1,_,1
+qcopystate,1,_,1,>,-,>
+
+qcopystate, 1,_,_
+qcopystate, 1,_,1,>,-,>
+
 qcopystate, 0,1,_
 qloopback, 0,1,_,-,-,<
+
+qcopystate, 0,_,_
+qloopback, 0,_,_,-,-,<
 
 //q1start
 q1start, 1,1,1
 q1start,1,1,1,>,-,-
 
+q1start, 1,1,_
+q1start,1,1,_,>,-,-
+
+q1start, 1,_,_
+q1start,1,_,_,>,-,-
+
+q1start, 1,0,1
+q1start,1,0,1,>,-,-
+
+q1start, 1,0,_
+q1start,1,0,_,>,-,-
+
 q1start,0,1,1
 qcopystate,0,1,1,>,-,-
+
+q1start,0,0,1
+qcopystate,0,0,1,>,-,-
+
+q1start,0,1,_
+qcopystate,0,1,_,>,-,-
+
+q1start,0,0,_
+qcopystate,0,0,_,>,-,-
+
+q1start,0,_,_
+qcopystate,0,_,_,>,-,-
 
 //qloopback
 qloopback,_,1,1
 qloopback, _,1,1,<,-,<
 
+qloopback,_,_,1
+qloopback, _,_,1,<,-,<
+
 qloopback,1,1,1
 qloopback,1,1,1,<,-,<
+
+qloopback,1,_,1
+qloopback,1,_,1,<,-,<
 
 qloopback,0,1,1
 qloopback,0,1,1,<,-,<
 
+qloopback,0,_,1
+qloopback,0,_,1,<,-,<
+
 qloopback,_,0,1
 qloopback, _,0,1,<,-,<
+
+qloopback,_,_,1
+qloopback, _,_,1,<,-,<
 
 qloopback,1,0,1
 qloopback,1,0,1,<,-,<
 
+qloopback,1,_,1
+qloopback,1,_,1,<,-,<
+
 qloopback,0,0,1
 qloopback, 0,0,1,<,-,<
 
+qloopback,0,_,1
+qloopback, 0,_,1,<,-,<
+
 qloopback,1,1,_
 qloopback,1,1,_,<,-,-
+
+qloopback,1,_,_
+qloopback,1,_,_,<,-,-
 
 qloopback,1,0,_
 qloopback,1,0,_,<,-,-
@@ -113,11 +179,17 @@ qloopback,0,1,_,<,-,-
 qloopback,0,0,_
 qloopback,0,0,_,<,-,-
 
+qloopback,0,_,_
+qloopback,0,_,_,<,-,-
+
 qloopback,#,1,_
 qstatecheck,#,1,_,>,-,>
 
 qloopback,#,0,_
 qstatecheck,#,0,_,>,-,>
+
+qloopback,#,_,_
+qstatecheck,#,_,_,>,-,>
 
 //qstatecheck
 qstatecheck,1,1,1
@@ -133,10 +205,19 @@ qstatecheck,0,0,1
 qresetcurrent,0,0,1,-,-,-
 
 qstatecheck,0,1,_
-qinputcheck,0,1,_,>,>,<
+qclearstate,0,1,_,>,-,<
 
 qstatecheck,0,0,_
-qinputcheck,0,0,_,>,>,<
+qclearstate,0,0,_,>,-,<
+
+qstatecheck,1,1,_
+qresetcurrent,1,1,_,>,-,<
+
+qstatecheck,1,0,_
+qresetcurrent,1,0,_,>,-,<
+
+qstatecheck,1,_,1
+qchecksuccess1,1,_,1,-,-,-
 
 //qnextstate1
 qnextstate1,1,1,1
@@ -172,8 +253,98 @@ qresetcurrent,0,0,1,-,-,<
 qresetcurrent,0,1,1
 qresetcurrent,0,1,1,-,-,<
 
+qresetcurrent,1,1,1
+qresetcurrent,1,1,1,>,-,<
+
+qresetcurrent,1,0,1
+qresetcurrent,1,0,1,>,-,<
+
+qresetcurrent,1,_,1
+qresetcurrent,1,_,1,>,-,<
+
 qresetcurrent,0,0,_
 qnextstate1,0,0,_,-,-,>
 
 qresetcurrent,0,1,_
-qnextstate1,0,1,_,-,-,>
+qnextstate1,0,1,_,>,-,>
+
+//qclearstate
+qclearstate, 1,_,1
+qclearstate, 1,_,_,-,-,<
+
+qclearstate, 0,_,1
+qclearstate, 0,_,_,-,-,<
+
+qclearstate, 1,0,1
+qclearstate, 1,0,_,-,-,<
+
+qclearstate, 0,0,1
+qclearstate, 0,0,_,-,-,<
+
+qclearstate, 0,1,1
+qclearstate, 0,1,_,-,-,<
+
+qclearstate, 1,1,1
+qclearstate, 1,1,_,-,-,<
+
+qclearstate, 1,_,_
+qinputcheck, 1,_,_,-,-,<
+
+qclearstate, 0,_,_
+qinputcheck, 0,_,_,-,-,<
+
+qclearstate, 1,0,_
+qinputcheck, 1,0,_,-,-,<
+
+qclearstate, 0,0,_
+qinputcheck, 0,0,_,-,-,<
+
+qclearstate, 0,1,_
+qinputcheck, 0,1,_,-,-,<
+
+qclearstate, 1,1,_
+qinputcheck, 1,1,_,-,-,<
+
+//qchecksuccess1
+qchecksuccess1,1,_,1
+qchecksuccess1,1,_,1,>,-,-
+
+qchecksuccess1,0,_,1
+qcheck0,0,_,1,>,-,-
+
+//qcheck0
+qcheck0,0,_,1
+qchecksuccess2,0,_,1,>,-,-
+
+qcheck0,1,_,1
+qchecksuccess1,1,_,1,>,-,-
+
+//qchecksuccess2
+qchecksuccess2,1,_,1
+qchecksuccess2,1,_,1,>,-,>
+
+qchecksuccess2,1,_,_
+qresetsuccess,1,_,_,>,-,<
+
+qchecksuccess2,_,_,1
+qfailstate,_,_,1,>,-,>
+
+qchecksuccess2,1,1,_
+qfailstate,1,1,_,>,-,>
+
+
+qchecksuccess2,_,_,_
+qSUCCESS,_,_,_,-,-,-
+
+//qresetsuccess
+qresetsuccess,1,_,1
+qresetsuccess,1,_,1,>,-,<
+
+qresetsuccess,0,_,1
+qresetsuccess,0,_,1,-,-,<
+
+qresetsuccess,0,_,_
+qchecksuccess2,0,_,_,>,-,>
+
+qresetsuccess,_,_,_
+qfailstate,_,_,_,-,-,-
