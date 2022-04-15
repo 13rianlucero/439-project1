@@ -1,0 +1,357 @@
+// CPSC-439 Theory of Computation
+// Project #1: Turing Machines & DFA’s
+// Brian Lucero | David Cortez | Ricardo Barojas | _______
+// April 15, 2022
+
+name: Project: 1 | TM & DFAs | Brian, David, Ricardo
+init: qcopyinput
+accept: qSUCCESS
+
+//qcopyinput
+qcopyinput, 1,_,_
+qcopyinput, _,1,_,>,>,-
+
+qcopyinput, 0,_,_
+qcopyinput, _,0,_,>,>,-
+
+qcopyinput, #,_,_
+qreturninput, #,_,_,-,<,-
+
+//qreturninput
+qreturninput, #,1,_
+qreturninput, #,1,_,-,<,-
+
+qreturninput, #,0,_
+qreturninput, #,0,_,-,<,-
+
+qreturninput, #,_,_
+qreadstate, #,_,_,>,>,-
+
+//qreadstate
+qreadstate, 1,1,_
+qreadstate, 1,1,1,>,-,>
+
+qreadstate, 0,1,_
+qinputcheck, 0,1,_,>,-,<
+
+qreadstate, 1,0,_
+qreadstate, 1,0,1,>,-,>
+
+qreadstate, 0,0,_
+qinputcheck, 0,0,_,>,-,<
+
+//qinputcheck
+qinputcheck, 1,0,1
+qcopystate, 1,0,1,-,>,-
+
+qinputcheck, 1,1,1
+q1start,1,1,1,-,-,-
+
+qinputcheck, 1,0,_
+qcopystate, 1,0,_,-,>,-
+
+qinputcheck, 1,1,_
+q1start,1,1,_,-,>,-
+
+//inputcheck - go to success
+qinputcheck, 1,_,1
+qchecksuccess, 1,_,1,-,-,-
+
+qinputcheck, 1,_,1
+qchecksuccess,1,_,1,-,-,-
+
+qinputcheck, 1,_,_
+qchecksuccess, 1,_,_,-,-,-
+
+qinputcheck, 1,_,_
+qchecksuccess,1,_,_,-,-,-
+
+//qcopystate
+qcopystate, 1,0,1
+qcopystate,1,0,1,>,-,>
+
+qcopystate, 1,0,_
+qcopystate, 1,0,1,>,-,>
+
+qcopystate, 1,_,1
+qcopystate,1,_,1,>,-,>
+
+qcopystate, 1,_,_
+qcopystate, 1,_,1,>,-,>
+
+qcopystate, 0,0,_
+qloopback, 0,0,_,-,-,<
+
+qcopystate, 1,1,1
+qcopystate,1,1,1,>,-,>
+
+qcopystate, 1,1,_
+qcopystate, 1,1,1,>,-,>
+
+qcopystate, 1,_,1
+qcopystate,1,_,1,>,-,>
+
+qcopystate, 1,_,_
+qcopystate, 1,_,1,>,-,>
+
+qcopystate, 0,1,_
+qloopback, 0,1,_,-,-,<
+
+qcopystate, 0,_,_
+qloopback, 0,_,_,-,-,<
+
+//q1start
+q1start, 1,1,1
+q1start,1,1,1,>,-,-
+
+q1start, 1,1,_
+q1start,1,1,_,>,-,-
+
+q1start, 1,_,_
+q1start,1,_,_,>,-,-
+
+q1start, 1,0,1
+q1start,1,0,1,>,-,-
+
+q1start, 1,0,_
+q1start,1,0,_,>,-,-
+
+q1start,0,1,1
+qcopystate,0,1,1,>,-,-
+
+q1start,0,0,1
+qcopystate,0,0,1,>,-,-
+
+q1start,0,1,_
+qcopystate,0,1,_,>,-,-
+
+q1start,0,0,_
+qcopystate,0,0,_,>,-,-
+
+q1start,0,_,_
+qcopystate,0,_,_,>,-,-
+
+//qloopback
+qloopback,_,1,1
+qloopback, _,1,1,<,-,<
+
+qloopback,_,_,1
+qloopback, _,_,1,<,-,<
+
+qloopback,1,1,1
+qloopback,1,1,1,<,-,<
+
+qloopback,1,_,1
+qloopback,1,_,1,<,-,<
+
+qloopback,0,1,1
+qloopback,0,1,1,<,-,<
+
+qloopback,0,_,1
+qloopback,0,_,1,<,-,<
+
+qloopback,_,0,1
+qloopback, _,0,1,<,-,<
+
+qloopback,_,_,1
+qloopback, _,_,1,<,-,<
+
+qloopback,1,0,1
+qloopback,1,0,1,<,-,<
+
+qloopback,1,_,1
+qloopback,1,_,1,<,-,<
+
+qloopback,0,0,1
+qloopback, 0,0,1,<,-,<
+
+qloopback,0,_,1
+qloopback, 0,_,1,<,-,<
+
+qloopback,1,1,_
+qloopback,1,1,_,<,-,-
+
+qloopback,1,_,_
+qloopback,1,_,_,<,-,-
+
+qloopback,1,0,_
+qloopback,1,0,_,<,-,-
+
+qloopback,0,1,_
+qloopback,0,1,_,<,-,-
+
+qloopback,0,0,_
+qloopback,0,0,_,<,-,-
+
+qloopback,0,_,_
+qloopback,0,_,_,<,-,-
+
+qloopback,#,1,_
+qstatecheck,#,1,_,>,-,>
+
+qloopback,#,0,_
+qstatecheck,#,0,_,>,-,>
+
+qloopback,#,_,_
+qstatecheck,#,_,_,>,-,>
+
+//qstatecheck
+qstatecheck,1,1,1
+qstatecheck,1,1,1,>,-,>
+
+qstatecheck,1,0,1
+qstatecheck,1,0,1,>,-,>
+
+qstatecheck,0,1,1
+qresetcurrent,0,1,1,-,-,-
+
+qstatecheck,0,0,1
+qresetcurrent,0,0,1,-,-,-
+
+qstatecheck,0,1,_
+qclearstate,0,1,_,>,-,<
+
+qstatecheck,0,0,_
+qclearstate,0,0,_,>,-,<
+
+qstatecheck,1,1,_
+qresetcurrent,1,1,_,>,-,<
+
+qstatecheck,1,0,_
+qresetcurrent,1,0,_,>,-,<
+
+qstatecheck,1,_,1
+qchecksuccess1,1,_,1,-,-,-
+
+//qnextstate1
+qnextstate1,1,1,1
+qnextstate1,1,1,1,>,-,-
+
+qnextstate1,1,0,1
+qnextstate1,1,0,1,>,-,-
+
+qnextstate1,0,1,1
+qnextstate2,0,1,1,>,-,-
+
+qnextstate1,0,0,1
+qnextstate2,0,0,1,>,-,-
+
+//qnextstate2
+qnextstate2,1,1,1
+qnextstate2,1,1,1,>,-,-
+
+qnextstate2,1,0,1
+qnextstate2,1,0,1,>,-,-
+
+qnextstate2,0,1,1
+qstatecheck,0,1,1,>,-,-
+
+qnextstate2,0,0,1
+qstatecheck,0,0,1,>,-,-
+
+//qresetcurrent
+
+qresetcurrent,0,0,1
+qresetcurrent,0,0,1,-,-,<
+
+qresetcurrent,0,1,1
+qresetcurrent,0,1,1,-,-,<
+
+qresetcurrent,1,1,1
+qresetcurrent,1,1,1,>,-,<
+
+qresetcurrent,1,0,1
+qresetcurrent,1,0,1,>,-,<
+
+qresetcurrent,1,_,1
+qresetcurrent,1,_,1,>,-,<
+
+qresetcurrent,0,0,_
+qnextstate1,0,0,_,-,-,>
+
+qresetcurrent,0,1,_
+qnextstate1,0,1,_,>,-,>
+
+//qclearstate
+qclearstate, 1,_,1
+qclearstate, 1,_,_,-,-,<
+
+qclearstate, 0,_,1
+qclearstate, 0,_,_,-,-,<
+
+qclearstate, 1,0,1
+qclearstate, 1,0,_,-,-,<
+
+qclearstate, 0,0,1
+qclearstate, 0,0,_,-,-,<
+
+qclearstate, 0,1,1
+qclearstate, 0,1,_,-,-,<
+
+qclearstate, 1,1,1
+qclearstate, 1,1,_,-,-,<
+
+qclearstate, 1,_,_
+qinputcheck, 1,_,_,-,-,<
+
+qclearstate, 0,_,_
+qinputcheck, 0,_,_,-,-,<
+
+qclearstate, 1,0,_
+qinputcheck, 1,0,_,-,-,<
+
+qclearstate, 0,0,_
+qinputcheck, 0,0,_,-,-,<
+
+qclearstate, 0,1,_
+qinputcheck, 0,1,_,-,-,<
+
+qclearstate, 1,1,_
+qinputcheck, 1,1,_,-,-,<
+
+//qchecksuccess1
+qchecksuccess1,1,_,1
+qchecksuccess1,1,_,1,>,-,-
+
+qchecksuccess1,0,_,1
+qcheck0,0,_,1,>,-,-
+
+//qcheck0
+qcheck0,0,_,1
+qchecksuccess2,0,_,1,>,-,-
+
+qcheck0,1,_,1
+qchecksuccess1,1,_,1,>,-,-
+
+//qchecksuccess2
+qchecksuccess2,1,_,1
+qchecksuccess2,1,_,1,>,-,>
+
+qchecksuccess2,1,_,_
+qresetsuccess,1,_,_,>,-,<
+
+qchecksuccess2,_,_,1
+qfailstate,_,_,1,>,-,>
+
+qchecksuccess2,1,1,_
+qfailstate,1,1,_,>,-,>
+
+
+qchecksuccess2,_,_,_
+qSUCCESS,_,_,_,-,-,-
+
+//qresetsuccess
+qresetsuccess,1,_,1
+qresetsuccess,1,_,1,>,-,<
+
+qresetsuccess,0,_,1
+qresetsuccess,0,_,1,-,-,<
+
+qresetsuccess,0,_,_
+qchecksuccess2,0,_,_,>,-,>
+
+qresetsuccess,_,_,_
+qfailstate,_,_,_,-,-,-
+
+qresetsuccess,_,_,1
+qfailstate,_,_,1,-,-,-
